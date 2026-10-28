@@ -1,0 +1,166 @@
+<html>
+<body>
+<!--StartFragment-->
+<!DOCTYPE html>
+--
+<html lang="uz">
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tokarlik kasbi va tayyor detal</title>
+<style>
+:root{--bg:#eef1f4;--ink:#1d2733;--mute:#5d6b7a;--panel:#fff;--line:#c9d1da;--steel1:#e3e8ee;--steel2:#8e9cac;--tool:#2b3a4a;--acc:#f2b200;--accink:#1d2733;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121920;--ink:#e8edf2;--mute:#9aa8b6;--panel:#1b242d;--line:#33414f;--steel1:#c4ccd6;--steel2:#5f6f80;--tool:#d7dde4}}
+:root[data-theme="dark"]{--bg:#121920;--ink:#e8edf2;--mute:#9aa8b6;--panel:#1b242d;--line:#33414f;--steel1:#c4ccd6;--steel2:#5f6f80;--tool:#d7dde4}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;line-height:1.5}
+main{max-width:960px;margin:0 auto;padding:20px 16px 32px}
+h1{font-size:clamp(1.3rem,3.2vw,1.8rem);margin:0 0 4px;font-weight:700}
+.sub{color:var(--mute);margin:0 0 16px}
+.stage{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px}
+svg{display:block;width:100%;height:auto}
+svg text{fill:var(--mute);font-size:13px;font-family:inherit}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 8px}
+.pill{border:1.5px solid var(--line);background:var(--panel);color:var(--ink);padding:8px 14px;border-radius:999px;font:inherit;font-weight:600;cursor:pointer}
+.pill[aria-current="true"]{background:var(--acc);border-color:var(--acc);color:var(--accink)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.cap{min-height:3.6em;margin:6px 0 12px;font-size:1.05rem;max-width:70ch}
+.ctl{display:flex;gap:10px;align-items:center}
+.btn{border:0;background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:8px;font:inherit;font-weight:600;cursor:pointer;min-width:112px}
+.btn.alt{background:transparent;color:var(--ink);border:1.5px solid var(--line);min-width:0}
+input[type=range]{flex:1;accent-color:var(--acc)}
+</style>
+</head>
+<body>
+<main>
+<h1>Tokarlik kasbi: zagotovkadan tayyor detalgacha</h1>
+<p class="sub">1-modul, 1-mavzu. Tokarlik ishining maqsadi: aylanayotgan metalldan chizma bo‘yicha detal tayyorlash.</p>
+ 
+<div class="stage">
+<svg viewBox="0 0 800 330" role="img" aria-label="Tokarlik dastgohida zagotovkaning pog‘onali valga aylanishi animatsiyasi">
+<defs>
+<linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--steel1)"/><stop offset=".45" stop-color="var(--steel1)" stop-opacity=".55"/><stop offset="1" stop-color="var(--steel2)"/></linearGradient>
+<clipPath id="clip"><path id="clipP" d=""/></clipPath>
+</defs>
+<line x1="40" y1="165" x2="770" y2="165" stroke="var(--mute)" stroke-dasharray="14 4 2 4" opacity=".5"/>
+<rect x="40" y="62" width="62" height="206" rx="6" fill="var(--steel2)"/>
+<rect x="102" y="92" width="26" height="146" fill="var(--tool)" opacity=".75"/>
+<text x="46" y="288">Patron</text>
+<path id="body" d="" fill="url(#g)" stroke="var(--tool)" stroke-width="1.5"/>
+<g id="lines" clip-path="url(#clip)" stroke="var(--tool)" stroke-width="1" opacity=".28"></g>
+<g id="chips" fill="var(--acc)"></g>
+<g id="tool">
+<polygon points="0,0 54,-40 118,-40 118,-84 20,-84 8,-24" fill="var(--tool)"/>
+<polygon points="0,0 8,-24 20,-26" fill="var(--acc)"/>
+</g>
+<text id="lbTool" x="0" y="0" opacity="0">Keskich</text>
+<text id="lbWork" x="440" y="62">Zagotovka (xom metall)</text>
+<g id="dims" opacity="0"></g>
+</svg>
+</div>
+ 
+<div class="pills" role="group" aria-label="Bosqichlar">
+<button class="pill" data-s="0" data-p="0.02">Zagotovka</button>
+<button class="pill" data-s="1" data-p="0.5">Ishlov</button>
+<button class="pill" data-s="2" data-p="0.97">Tayyor detal</button>
+</div>
+<p class="cap" id="cap" aria-live="polite"></p>
+ 
+<div class="ctl">
+<button class="btn" id="play">To‘xtatish</button>
+<input id="seek" type="range" min="0" max="1000" value="0" aria-label="Animatsiya o‘rni">
+<button class="btn alt" id="again">Qaytadan</button>
+</div>
+</main>
+ 
+<script>
+(function(){
+var NS="http://www.w3.org/2000/svg",CY=165,X0=128,X1=650,R=55,DUR=16;
+var caps=["Zagotovka — oddiy metall silindr. Dastgoh uni patronda tez aylantiradi, lekin hali unga ishlov berilmagan.",
+"Ishlov berish: keskich aylanayotgan zagotovkaga tegib, qatlam-qatlam ortiqcha metallni kesadi. Kesilgan metall qirindi bo‘lib tushadi.",
+"Tayyor detal — pog‘onali val. Tokar chizmadagi o‘lchamlarni aniq bajarib, zagotovkani kerakli shaklga keltirdi."];
+function S(u){return 1/(1+Math.exp(-u/3))}
+function fin(x){return x<250?55:x<450?38:x<600?28:20}
+function fsm(x){return 55-17*S(x-250)-10*S(x-450)-8*S(x-600)}
+function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+var body=document.getElementById("body"),clipP=document.getElementById("clipP"),lines=document.getElementById("lines"),
+chipsG=document.getElementById("chips"),tool=document.getElementById("tool"),lbTool=document.getElementById("lbTool"),
+lbWork=document.getElementById("lbWork"),dims=document.getElementById("dims"),cap=document.getElementById("cap"),
+play=document.getElementById("play"),seek=document.getElementById("seek"),again=document.getElementById("again");
+var L=[];for(var i=0;i<14;i++)L.push(el("line",{x1:X0,x2:X1},lines));
+var chips=[];for(i=0;i<30;i++){chips.push({e:el("circle",{r:2.4,opacity:0},chipsG),life:0,x:0,y:0,vx:0,vy:0})}
+[[190,55],[350,38],[525,28],[625,20]].forEach(function(d){
+var g=el("g",{},dims);
+el("line",{x1:d[0],x2:d[0],y1:CY-d[1],y2:CY+d[1],stroke:"var(--acc)","stroke-width":2},g);
+var t=el("text",{x:d[0]+5,y:CY+d[1]+16},g);t.textContent="Ø"+d[1]+" mm";
+});
+var p=0,playing=true,ang=0,last=0,stage=-1,spawnT=0;
+var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+if(reduce){playing=false;p=0.97;}
+ 
+function geom(){
+var toolX,tipR,cutting=false;
+if(p<0.10){toolX=662;tipR=R+34}
+else if(p<0.16){toolX=662;tipR=R+34-(R+34-20)*((p-0.10)/0.06)}
+else if(p<0.86){toolX=662-(662-250)*((p-0.16)/0.70);tipR=fsm(toolX);cutting=true}
+else if(p<0.92){toolX=250;tipR=38+(R+34-38)*((p-0.86)/0.06)}
+else{toolX=250;tipR=R+34}
+return{toolX:toolX,tipR:tipR,cutting:cutting}
+}
+function draw(g){
+var top="",bot="",x,r;
+for(x=X0;x<=X1;x+=2){r=x>g.toolX?fin(x):R;top+=(x==X0?"M":"L")+x+" "+(CY-r)+" "}
+for(x=X1;x>=X0;x-=2){r=x>g.toolX?fin(x):R;bot+="L"+x+" "+(CY+r)+" "}
+var d=top+bot+"Z";body.setAttribute("d",d);clipP.setAttribute("d",d);
+var shown=p>0.015&&p<0.93\|\|(!playing&&false);
+for(var k=0;k<L.length;k++){
+var a=ang+k*0.45,c=Math.cos(a);
+if(c<0){L[k].setAttribute("opacity",0);continue}
+var y=CY+R*Math.sin(a);L[k].setAttribute("y1",y);L[k].setAttribute("y2",y);L[k].setAttribute("opacity",c)
+}
+tool.setAttribute("transform","translate("+g.toolX+","+(CY-g.tipR)+")");
+lbTool.setAttribute("x",g.toolX+30);lbTool.setAttribute("y",CY-g.tipR-92);
+lbTool.setAttribute("opacity",p>0.1&&p<0.9?1:0);
+lbWork.setAttribute("opacity",p<0.16?1:0);
+dims.setAttribute("opacity",p>0.93?Math.min(1,(p-0.93)/0.04):0);
+}
+function setStage(){
+var s=p<0.12?0:p<0.92?1:2;
+if(s!==stage){stage=s;cap.textContent=caps[s];
+document.querySelectorAll(".pill").forEach(function(b){b.setAttribute("aria-current",String(+b.dataset.s===s))})}
+}
+function chipsStep(dt,g){
+spawnT+=dt;
+if(playing&&g.cutting&&spawnT>0.03){spawnT=0;
+for(var i=0;i<chips.length;i++){var c=chips[i];if(c.life<=0){c.life=1;c.x=g.toolX+4;c.y=CY-g.tipR;c.vx=40+Math.random()*90;c.vy=-60-Math.random()*90;break}}}
+chips.forEach(function(c){
+if(c.life<=0){c.e.setAttribute("opacity",0);return}
+c.life-=dt*1.1;c.vy+=300*dt;c.x+=c.vx*dt;c.y+=c.vy*dt;
+c.e.setAttribute("cx",c.x);c.e.setAttribute("cy",c.y);c.e.setAttribute("opacity",Math.max(0,c.life))})
+}
+function frame(t){
+var dt=Math.min(0.05,(t-last)/1000\|\|0);last=t;
+if(playing){p+=dt/DUR;if(p>=1){p=1;playing=false;play.textContent="Qayta ko‘rish"}
+if(p>0.015&&p<0.92)ang+=dt*6}
+var g=geom();draw(g);setStage();chipsStep(dt,g);seek.value=Math.round(p*1000);
+requestAnimationFrame(frame)
+}
+play.onclick=function(){
+if(p>=1){p=0;chips.forEach(function(c){c.life=0})}
+playing=!playing;play.textContent=playing?"To‘xtatish":"Davom ettirish";if(p===0&&playing)play.textContent="To‘xtatish"
+};
+again.onclick=function(){p=0;playing=true;play.textContent="To‘xtatish";chips.forEach(function(c){c.life=0})};
+seek.oninput=function(){p=seek.value/1000;playing=false;play.textContent="Davom ettirish"};
+document.querySelectorAll(".pill").forEach(function(b){b.onclick=function(){p=+b.dataset.p;playing=false;play.textContent="Davom ettirish";if(p<0.5)ang+=0}});
+if(reduce)play.textContent="Boshlash";
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
+ 
+
+<br class="Apple-interchange-newline"><!--EndFragment-->
+</body>
+</html>
